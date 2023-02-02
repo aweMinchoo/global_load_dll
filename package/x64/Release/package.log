@@ -1,0 +1,2 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(1075,5): error MSB6006: “link.exe”已退出，代码为 1181。
+LINK : fatal error LNK1181: 无法打开输入文件“D:\vs-code\qianxin_global_load_dll\Release\demo_win32.lib”
