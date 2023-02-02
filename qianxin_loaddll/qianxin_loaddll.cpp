@@ -87,8 +87,8 @@ int _cdecl wmain(int argc, wchar_t* argv[])
     if (load)
         wcout << "[+] Driver loading success\n";
     wcout << "[+] delete drive " << driver_path << endl;
+    // 好像删除不了，得卸载完后才能删除
     bool is_removed = filesystem::remove(driver_path);
-    if (!is_removed) wcout << "[+] driver not removed\n";
 
     return 0;
 }
